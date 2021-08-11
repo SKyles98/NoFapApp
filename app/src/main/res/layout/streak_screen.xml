@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+
+    <include
+        android:id="@+id/include"
+        layout="@layout/generic_toolbar" />
+
+
+    <ProgressBar
+        android:id="@+id/streakProgress"
+        android:layout_width="300dp"
+        android:layout_height="300dp"
+        android:layout_marginTop="84dp"
+        android:indeterminateOnly="false"
+        tools:progress="50"
+        android:progressDrawable="@drawable/custom_progressbar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/include" />
+
+    <TextView
+        android:id="@+id/currentDaysTxt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="0 days"
+        android:textColor="@color/black"
+        android:textSize="25sp"
+        app:layout_constraintBottom_toBottomOf="@+id/streakProgress"
+        app:layout_constraintEnd_toEndOf="@+id/streakProgress"
+        app:layout_constraintHorizontal_bias="0.502"
+        app:layout_constraintStart_toStartOf="@+id/streakProgress"
+        app:layout_constraintTop_toTopOf="@+id/streakProgress"
+        app:layout_constraintVertical_bias="0.357" />
+
+    <TextView
+        android:id="@+id/currentTimeTxt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="00:00:00"
+        android:textColor="@color/black"
+        android:textSize="25sp"
+        app:layout_constraintBottom_toBottomOf="@+id/streakProgress"
+        app:layout_constraintEnd_toEndOf="@+id/streakProgress"
+        app:layout_constraintHorizontal_bias="0.502"
+        app:layout_constraintStart_toStartOf="@+id/streakProgress"
+        app:layout_constraintTop_toTopOf="@+id/streakProgress"
+        app:layout_constraintVertical_bias="0.545" />
+
+    <TextView
+        android:id="@+id/bestStreakTxt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:background="@drawable/textview_shape"
+        android:text="Best Streak: 0 Days"
+        android:textColor="@color/white"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/streakProgress"/>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/relapseButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/streakProgress"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="76dp"
+        android:backgroundTint="@color/error_red"
+        android:text="@string/log_urge_relapse"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/streakProgress" />
+</androidx.constraintlayout.widget.ConstraintLayout>

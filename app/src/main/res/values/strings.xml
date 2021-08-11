@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">MainActivity</string>
+    <string name="streak">Streak</string>
+    <string name="history">History</string>
+    <string name="motivation">Motivation</string>
+    <string name="log_urge_relapse">Log Urge/Relapse</string>
+    <string name="settings">Settings</string>
+    <string name="serviceDescription">NoFapTimer</string>
+    <string name="Preferences_File_Key">com.saleef.temperedvolition.PreferenceKey</string>
+</resources>

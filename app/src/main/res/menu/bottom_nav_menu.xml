@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+
+    <item
+        android:id="@+id/streak"
+        android:icon="@drawable/ic_streak"
+        android:title="@string/streak"
+        android:iconTint="@color/white"/>
+
+
+    <item
+        android:id="@+id/relapses"
+        android:icon="@drawable/ic_history"
+        android:title="@string/history"
+        android:iconTint="@color/white"/>
+
+    <item
+        android:id="@+id/motivation"
+        android:icon="@drawable/reward"
+        android:title="@string/motivation"
+        android:iconTint="@color/white"/>
+
+
+
+
+</menu>
