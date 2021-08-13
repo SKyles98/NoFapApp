@@ -1,6 +1,7 @@
 package com.saleef.temperedvolition.views.streakscreen
 
 
+
 import android.util.Log
 import android.view.LayoutInflater
 
@@ -28,7 +29,7 @@ class StreakViewImpl(private val layoutinflater: LayoutInflater, private val par
    private val daysTxt: TextView
    private val highestTxt:TextView
    private val relapseButton:MaterialButton
-
+   private var flag:Int = 0
     init {
          toolbar = findViewById(R.id.toolBar)
         progressBar = findViewById(R.id.streakProgress)
@@ -61,14 +62,25 @@ class StreakViewImpl(private val layoutinflater: LayoutInflater, private val par
     // Recieve milliseconds and start the timer (User is on the app at this point)
     // We still need the timer count while app is closed
 
-    fun bindTimer(seconds: Int){
-        val timeFormat =  String.format("%02d:%02d:%02d", seconds / 3600,
-            (seconds % 3600) / 60, (seconds % 60))
+    fun bindTimer(milliseconds: Long){
+
+        var initTime:Long = 0
+        if (flag==0) { // SO the first run we we can just increment from there
+             initTime = milliseconds
+            val timeFormat =  String.format("%02d:%02d:%02d", initTime  / 3600,
+                (initTime  % 3600) / 60, (initTime  % 60))
+
+            timerTxt.text = timeFormat
+            flag++
+        }
+        val timeFormat =  String.format("%02d:%02d:%02d", (initTime + milliseconds) / 3600,
+            ((initTime + milliseconds) % 3600) / 60, ((initTime + milliseconds) % 60))
+        Log.i("tyga",timeFormat)
         timerTxt.text = timeFormat
     }
 
 
-    fun dayPassed(days:Int){
+    fun bindDaysPassed(days:Int){
         daysTxt.text = days.toString()
     }
 }

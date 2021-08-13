@@ -10,8 +10,8 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MainActivity">
         <service android:name=".TimerService"
-
             android:exported="false"/>
+        <receiver android:name=".AlertReceiver"/>
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

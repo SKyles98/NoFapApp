@@ -18,6 +18,8 @@ class ActivityCompositionRoot( private val appCompatActivity: AppCompatActivity,
         )
     }
 
+     val alarmHelper:AlarmHelper get() = AlarmHelper(fragmentActivity,sharedPrefs)
+
     private val supportFragmentManager:FragmentManager get() = fragmentActivity.supportFragmentManager
 
 
