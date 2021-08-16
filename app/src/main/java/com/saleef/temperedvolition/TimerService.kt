@@ -33,11 +33,13 @@ class TimerService : Service() {
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
         Log.i("Worked", "Please????")
+
         val bundle:Bundle? = intent?.extras
         sharedPrefs = SharedPrefs(getSharedPreferences(R.string.Preferences_File_Key.toString(), Context.MODE_PRIVATE))
         val time: Int? = bundle?.getInt("SECONDSKEY")
+        Log.i("Work", "Please????$time")
         timer = if (time == 0){
-            createTimer(300)
+            createTimer(86400)
         } else{
             time?.let { createTimer(it) }!!
         }
@@ -55,7 +57,8 @@ class TimerService : Service() {
        // Hour time gets the current
         return object:CountUpTimer(hourTime, 1){
             override fun onCount(count: Int) {
-                //Log.i("Works", "Pleasu Desu")
+                Log.i("Works", "Pleasu Desu$count")
+                Log.i("Work hr", "Pleasu Desu$hourTime")
                   tickIntent.putExtra(TIME_LEFT_KEY, count)
                 sendBroadcast(tickIntent)
 
@@ -63,17 +66,11 @@ class TimerService : Service() {
 
             override fun onFinish() {
                 sendBroadcast(finishedIntent)
-                resetTimer()
             }
 
         }
     }
-    fun resetTimer(){
-        timer.cancel()
-        timer = createTimer(300)
-        timer.start()
 
-    }
 
 
     companion object {

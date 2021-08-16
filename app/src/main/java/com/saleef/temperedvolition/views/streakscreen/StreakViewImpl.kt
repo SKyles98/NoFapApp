@@ -30,6 +30,7 @@ class StreakViewImpl(private val layoutinflater: LayoutInflater, private val par
    private val highestTxt:TextView
    private val relapseButton:MaterialButton
    private var flag:Int = 0
+   private var initTime:Long = 0
     init {
          toolbar = findViewById(R.id.toolBar)
         progressBar = findViewById(R.id.streakProgress)
@@ -64,19 +65,24 @@ class StreakViewImpl(private val layoutinflater: LayoutInflater, private val par
 
     fun bindTimer(milliseconds: Long){
 
-        var initTime:Long = 0
         if (flag==0) { // SO the first run we we can just increment from there
              initTime = milliseconds
             val timeFormat =  String.format("%02d:%02d:%02d", initTime  / 3600,
                 (initTime  % 3600) / 60, (initTime  % 60))
-
+            Log.i("tit",(initTime).toString())
             timerTxt.text = timeFormat
             flag++
+        } else{
+            Log.i("tittie",(initTime + milliseconds).toString())
+            val timeFormat =  String.format("%02d:%02d:%02d", (initTime + milliseconds) / 3600,
+                ((initTime + milliseconds) % 3600) / 60, (((initTime + milliseconds) % 3600) % 60))
+            Log.i("tyga",timeFormat)
+            timerTxt.text = timeFormat
         }
-        val timeFormat =  String.format("%02d:%02d:%02d", (initTime + milliseconds) / 3600,
-            ((initTime + milliseconds) % 3600) / 60, ((initTime + milliseconds) % 60))
-        Log.i("tyga",timeFormat)
-        timerTxt.text = timeFormat
+    }
+
+    fun resetText(){
+        initTime = 0
     }
 
 

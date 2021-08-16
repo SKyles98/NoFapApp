@@ -1,7 +1,7 @@
 package com.saleef.temperedvolition
 
 import android.content.SharedPreferences
-import android.util.Log
+
 
 class SharedPrefs(private val sharedPreferences: SharedPreferences) {
 
@@ -61,19 +61,9 @@ class SharedPrefs(private val sharedPreferences: SharedPreferences) {
         return sharedPreferences.getLong(START_TIME,0)
     }
 
-    fun saveEndTime(time: Long){
-        val editor:SharedPreferences.Editor = sharedPreferences.edit()
-        editor.putLong(END_TIME,time)
-        Log.i("saved?",time.toString())
-        editor.apply()
-    }
 
-    fun getEndTime():Long{
-        return sharedPreferences.getLong(END_TIME,0)
-    }
     companion object{
         const val START_STATUS:String = "START STATUS"
-        const val END_TIME:String = "CURRENT TIME"
         const val CURRENT_DAYS:String = "CURR_DAYS"
         const val TIMER_STATE:String = "TIMER STATE"
         const val START_TIME:String = "START TIME"

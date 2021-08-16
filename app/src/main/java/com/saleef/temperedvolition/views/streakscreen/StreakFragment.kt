@@ -27,6 +27,7 @@ class StreakFragment: BaseFragment(),StreakViewImpl.Listener {
     private  val timerReceiver:TimerReciever = TimerReciever()
     private  lateinit var sharedPrefs: SharedPrefs
     private lateinit var  alarmHelper:AlarmHelper
+
     companion object{
         const val SECONDSKEY = "SECONDSKEY"
     }
@@ -36,24 +37,21 @@ class StreakFragment: BaseFragment(),StreakViewImpl.Listener {
         Log.i("service", "Started")
         sharedPrefs = compositionRoot.sharedPrefs
         alarmHelper = compositionRoot.alarmHelper
+
         val serviceIntent = Intent(context, TimerService::class.java)
 
             // If service is not started then we save current date
            // Save the date and then set a boolean flag that determines if need to save the again
         // We only set this flag to true if user hits the relapse button which resets the service and alarm from the beginning
-           //TODO I need the month,day,year if this value is different next time we check it then do some equation to calcutate diff
-        val init = 300
+
         if (!sharedPrefs.getStartStatus()) {
             alarmHelper.initAlarmTimer()
             sharedPrefs.setStartStatus(true)
-
-            serviceIntent.putExtra(SECONDSKEY,init)
+            serviceIntent.putExtra(SECONDSKEY,alarmHelper.twentyFourHours())
         } else{
-            serviceIntent.putExtra(SECONDSKEY, (init - (alarmHelper.calculateTimeDiff())/1000).toInt()) // Gets the time left needed to complete the goal
+            serviceIntent.putExtra(SECONDSKEY,  (alarmHelper.getRemainingTimerDuration()).toInt()) // Gets the time left needed to complete the goal
         }
-
                 requireActivity().startService(serviceIntent)
-
     }
 
 
@@ -70,21 +68,22 @@ class StreakFragment: BaseFragment(),StreakViewImpl.Listener {
         Log.i("called", "hi")
         streakView.registerListener(this)
         requireActivity().registerReceiver(timerReceiver, IntentFilter(TimerService.ACTION_TICK))
-        requireActivity().registerReceiver(timerReceiver,
-                IntentFilter(TimerService.ACTION_FINISHED)
-        )
+        requireActivity().registerReceiver(timerReceiver, IntentFilter(TimerService.ACTION_FINISHED))
         bindView()
     }
 
+//Problem Timer is ending as soon as it starts
    private fun bindView(){ // Will show the representation of our left off time
-      streakView.bindTimer(alarmHelper.calculateTimeDiff()/1000 + 50)
+       Log.i("t",(alarmHelper.getStartingTimeOffset().toString()))
+
+      streakView.bindTimer(alarmHelper.getStartingTimeOffset())
        streakView.bindDaysPassed(sharedPrefs.getDays())
    }
 
     override fun onStop() {
         super.onStop()
         streakView.unRegisterListener(this)
-        alarmHelper.saveTime()
+
         try {
             requireActivity().unregisterReceiver(timerReceiver)
         } catch (e: Exception){
@@ -109,24 +108,29 @@ class StreakFragment: BaseFragment(),StreakViewImpl.Listener {
 
     override fun onDestroy() {
         super.onDestroy()
-
+        requireActivity().stopService(Intent(context, TimerService::class.java))
     }
 
 
   private inner class TimerReciever : BroadcastReceiver() {
-
 
         override fun onReceive(context: Context?, intent: Intent?) {
             if (intent == null) return
 
             when (intent.action) {
                 TimerService.ACTION_TICK -> {
-                    Log.i("p", "Cmon")
                     val timeLeft = intent.getIntExtra(TimerService.TIME_LEFT_KEY, 0)
+                    Log.i("p", timeLeft.toString())
                     streakView.bindTimer(timeLeft.toLong())
                 }
                 TimerService.ACTION_FINISHED -> {
                     Toast.makeText(requireContext(), "ZeHahahaha", Toast.LENGTH_LONG).show()
+                    streakView.resetText()
+                    streakView.bindDaysPassed(sharedPrefs.getDays())
+                    val serviceIntent = Intent(context, TimerService::class.java)
+                    requireActivity().stopService(serviceIntent)
+                    serviceIntent.putExtra(SECONDSKEY,86400)
+                    requireActivity().startService(serviceIntent)
                 }
             }
         }
