@@ -19,7 +19,9 @@ class AlertReceiver : BroadcastReceiver() {
        context?.getSharedPreferences(R.string.Preferences_File_Key.toString(),Context.MODE_PRIVATE)
            ?.let { SharedPrefs(it) }
         sharedPrefs?.incrementDay(1)
+        // Each day passed we increment the start by 24 hours in milliseconds
 
+        sharedPrefs?.saveStartTime(sharedPrefs.getStartTime() + 86400000)
         sendNotification(context)
 
     }

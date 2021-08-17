@@ -8,4 +8,8 @@
     <string name="serviceDescription">NoFapTimer</string>
     <string name="Preferences_File_Key">com.saleef.temperedvolition.PreferenceKey</string>
     <string name="Channel_ID">channel_id</string>
+    <string name="relapsed">Relapsed?</string>
+    <string name="leave_a_reason_short_note">Leave a reason/short note...</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
 </resources>

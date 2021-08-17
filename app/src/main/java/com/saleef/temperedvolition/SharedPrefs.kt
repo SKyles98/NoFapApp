@@ -6,12 +6,9 @@ import android.content.SharedPreferences
 class SharedPrefs(private val sharedPreferences: SharedPreferences) {
 
 
-    //Store the highest day
-    //Store the day for the current streak
-    //Store the seconds(happens when user clicks on app
 
-    // Method that recieves a one or a zero to notify that a service has been started
-    // If 1 then that service has already been started so we dont start it again in fragment onCreate
+
+
     fun setStartStatus(started:Boolean){
         val editor:SharedPreferences.Editor = sharedPreferences.edit()
         editor.putBoolean(START_STATUS,started)
@@ -61,11 +58,21 @@ class SharedPrefs(private val sharedPreferences: SharedPreferences) {
         return sharedPreferences.getLong(START_TIME,0)
     }
 
+    fun setStartDate(date:String){
+        val editor:SharedPreferences.Editor = sharedPreferences.edit()
+        editor.putString(START_DATE,date)
+        editor.apply()
+    }
+
+    fun getStartDate(): String? {
+        return sharedPreferences.getString(START_DATE,"NONE")
+    }
 
     companion object{
         const val START_STATUS:String = "START STATUS"
         const val CURRENT_DAYS:String = "CURR_DAYS"
         const val TIMER_STATE:String = "TIMER STATE"
         const val START_TIME:String = "START TIME"
+        const val START_DATE:String = "START DATE"
     }
 }

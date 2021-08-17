@@ -1,4 +1,4 @@
-package com.saleef.temperedvolition.views
+package com.saleef.temperedvolition.views.historyscreen
 
 
 import android.view.LayoutInflater
@@ -23,13 +23,14 @@ class HistoryViewImpl(private val layoutInflater: LayoutInflater,private val vie
     }
 
 
-    private lateinit var toolbar:Toolbar
-    private lateinit var recyclerView: RecyclerView
-    private lateinit var adapter:HistoryRecyclerAdapter
+    private val toolbar:Toolbar
+    private val recyclerView: RecyclerView
+    private val  adapter: HistoryRecyclerAdapter
     init {
         toolbar = findViewById(R.id.toolBar)
         toolbar.title = "History"
-        toolbar.menu.findItem(R.id.settings).isVisible = false
+        toolbar.inflateMenu(R.menu.settings)
+        toolbar.menu.findItem(R.id.visualMode).isVisible = false
         toolbar.setOnMenuItemClickListener{
             when (it.itemId){
                 R.id.history -> {

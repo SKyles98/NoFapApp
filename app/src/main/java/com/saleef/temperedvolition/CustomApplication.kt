@@ -9,8 +9,8 @@ class CustomApplication:Application() {
 
 
     override fun onCreate() {
-        super.onCreate()
-
+        super.onCreate() // Set our database instance before the anything else is initialized
+        HistoryNoteDataBase.getDataBase(this)
     }
 
 

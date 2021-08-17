@@ -7,6 +7,7 @@ import android.content.Intent
 
 
 import androidx.fragment.app.FragmentActivity
+import java.time.LocalDateTime
 import java.util.*
 
 // This will be our utility class to assist with alarm function (Checking Alarm State,Activating Alarm,Canceling Alarm)
@@ -30,12 +31,13 @@ class AlarmHelper(private val fragmentActivity: FragmentActivity,private val sha
             val pendingIntent = PendingIntent.getBroadcast(fragmentActivity, 1, intent, 0)
             am.setInexactRepeating(AlarmManager.RTC_WAKEUP, calendar.timeInMillis + 86400000, 30 * 1000, pendingIntent) //24hrs
             sharedPrefs.saveStartTime(calendar.timeInMillis) // Saved when our streak was started
+            sharedPrefs.setStartDate(LocalDateTime.now().toString())
             sharedPrefs.setTimerState(TimerState.STARTED)
         }
     }
 
 
-    fun cancelAlarmTimer(){
+    private fun cancelAlarmTimer(){
         val am:AlarmManager = fragmentActivity.getSystemService(Context.ALARM_SERVICE) as AlarmManager
         val intent = Intent(fragmentActivity,AlertReceiver::class.java)
         val pendingIntent = PendingIntent.getBroadcast(fragmentActivity,1,intent,0)
@@ -58,10 +60,24 @@ class AlarmHelper(private val fragmentActivity: FragmentActivity,private val sha
     fun twentyFourHours():Int{
         return 86400
     }
-     companion object{
+
+    fun getNote(note: String): HistoryNote {
+        val startDate: String = sharedPrefs.getStartDate() + "->"
+        val endDate:String = LocalDateTime.now().toString()
+        val duration:Int = sharedPrefs.getDays()
+        return HistoryNote(0,startDate,endDate,duration,note)
+    }
+
+    fun resetAlarm(){
+        cancelAlarmTimer()
+        sharedPrefs.setTimerState(TimerState.STOPPED)
+        // NO point in changing start status as alarm would already be init
+        initAlarmTimer()
+    }
+
+    companion object{
          const val CHANNEL_ID = "NOFAPCHANNEL"
          const val Notificationid = 101
-
      }
 
 }

@@ -14,20 +14,21 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import com.saleef.temperedvolition.AlarmHelper
-import com.saleef.temperedvolition.BaseFragment
-import com.saleef.temperedvolition.SharedPrefs
-import com.saleef.temperedvolition.TimerService
-
+import com.saleef.temperedvolition.*
+import com.saleef.temperedvolition.common.constants.Constants
+import com.saleef.temperedvolition.views.common.base.BaseFragment
+import kotlinx.coroutines.*
 
 
 class StreakFragment: BaseFragment(),StreakViewImpl.Listener {
 
+    private val coroutineScope = CoroutineScope(SupervisorJob() + Dispatchers.Main.immediate)
     private lateinit var streakView:StreakViewImpl
     private  val timerReceiver:TimerReciever = TimerReciever()
     private  lateinit var sharedPrefs: SharedPrefs
     private lateinit var  alarmHelper:AlarmHelper
-
+    private lateinit var  historyNoteDao: HistoryNoteDao
+    private lateinit var  dialogHelper: DialogHelper
     companion object{
         const val SECONDSKEY = "SECONDSKEY"
     }
@@ -37,7 +38,8 @@ class StreakFragment: BaseFragment(),StreakViewImpl.Listener {
         Log.i("service", "Started")
         sharedPrefs = compositionRoot.sharedPrefs
         alarmHelper = compositionRoot.alarmHelper
-
+        historyNoteDao = compositionRoot.historyNoteDao
+        dialogHelper = compositionRoot.dialogHelper
         val serviceIntent = Intent(context, TimerService::class.java)
 
             // If service is not started then we save current date
@@ -57,8 +59,8 @@ class StreakFragment: BaseFragment(),StreakViewImpl.Listener {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
-         streakView = StreakViewImpl(inflater, container)
-
+         streakView = compositionRoot.viewFactory.newStreakViewImpl(container)
+        catchdialogResult()
         return streakView.rootView
     }
 
@@ -72,10 +74,9 @@ class StreakFragment: BaseFragment(),StreakViewImpl.Listener {
         bindView()
     }
 
-//Problem Timer is ending as soon as it starts
-   private fun bindView(){ // Will show the representation of our left off time
-       Log.i("t",(alarmHelper.getStartingTimeOffset().toString()))
 
+   private fun bindView(){
+       Log.i("t",(alarmHelper.getStartingTimeOffset().toString()))
       streakView.bindTimer(alarmHelper.getStartingTimeOffset())
        streakView.bindDaysPassed(sharedPrefs.getDays())
    }
@@ -91,26 +92,50 @@ class StreakFragment: BaseFragment(),StreakViewImpl.Listener {
         }
     }
 
-    override fun onResetClicked() {
-        // Show dialog where user can enter option to give a reason for relapse then stop and start service
-        // After clicking cancel dont stop, Clicking relapse stop service and starts new one
-        Log.i("hello", "Stop Please")
-        requireActivity().stopService(Intent(context, TimerService::class.java))
-        alarmHelper.cancelAlarmTimer()
-        //requireActivity().startService(Intent(context,TimerService::class.java))
-    }
-
-    override fun onSettingsClicked() {
-
-    }
-
-
-
     override fun onDestroy() {
         super.onDestroy()
         requireActivity().stopService(Intent(context, TimerService::class.java))
     }
 
+
+    override fun onResetClicked() {
+        dialogHelper.createResetDialog()
+    }
+
+
+    override fun onVisualModeClicked() {
+        TODO("Implement night mode and day mode functionality")
+    }
+
+
+
+
+
+    fun catchdialogResult(){
+        parentFragmentManager.setFragmentResultListener(Constants.REQUESTKEY,this,{ requestKey:String,bundle:Bundle ->
+            bundle.getString(Constants.NOTEKEY)?.let { addNote(it) }
+        })
+    }
+
+
+    private fun addNote(note:String){
+
+
+        coroutineScope.launch {
+            try{
+                historyNoteDao.addNote(alarmHelper.getNote(note))
+            } finally {
+                val serviceIntent = Intent(context,TimerService::class.java)
+                requireActivity().stopService(serviceIntent)
+                alarmHelper.resetAlarm()
+                streakView.resetText()
+                serviceIntent.putExtra(SECONDSKEY,alarmHelper.twentyFourHours())
+                requireActivity().startService(serviceIntent)
+                Toast.makeText(requireContext(),"Added",Toast.LENGTH_LONG).show()
+            }
+        }
+
+    }
 
   private inner class TimerReciever : BroadcastReceiver() {
 

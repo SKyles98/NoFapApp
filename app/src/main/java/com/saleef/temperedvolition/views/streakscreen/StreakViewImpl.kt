@@ -20,7 +20,7 @@ class StreakViewImpl(private val layoutinflater: LayoutInflater, private val par
 
     interface Listener{
        fun onResetClicked()
-       fun onSettingsClicked()
+       fun onVisualModeClicked()
     }
 
    private val toolbar:Toolbar
@@ -32,36 +32,34 @@ class StreakViewImpl(private val layoutinflater: LayoutInflater, private val par
    private var flag:Int = 0
    private var initTime:Long = 0
     init {
-         toolbar = findViewById(R.id.toolBar)
+
         progressBar = findViewById(R.id.streakProgress)
         timerTxt = findViewById(R.id.currentTimeTxt)
         daysTxt = findViewById(R.id.currentDaysTxt)
         highestTxt = findViewById(R.id.bestStreakTxt)
         relapseButton = findViewById(R.id.relapseButton)
+
+        //ToolBar init
+        toolbar = findViewById(R.id.toolBar)
         toolbar.title = "Streak"
         toolbar.inflateMenu(R.menu.settings)
+        toolbar.menu.findItem(R.id.history).isVisible = false
         toolbar.setOnMenuItemClickListener{
             when (it.itemId){
-                R.id.settings -> {
+                R.id.visualMode -> {
                     for (listener in listeners) {
-                        listener.onSettingsClicked()
+                        listener.onVisualModeClicked()
                     }
                     return@setOnMenuItemClickListener true
                 }
                 else -> false
             }
         }
+
         relapseButton.setOnClickListener { for (listener in listeners) listener.onResetClicked() }
     }
 
-    /*
-     I need global timezone time that will get loaded into timertxt
-     This timer needs to continue running while application is closed and resets when we hit 24hrs
-     Current days starts at 0 but gets incremented everytime 24 hours passes
-     */
 
-    // Recieve milliseconds and start the timer (User is on the app at this point)
-    // We still need the timer count while app is closed
 
     fun bindTimer(milliseconds: Long){
 

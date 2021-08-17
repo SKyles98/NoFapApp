@@ -13,11 +13,8 @@ Resource section for verified sources
 Maybe a todo list
  */
 import android.os.Bundle
-import androidx.appcompat.app.AppCompatActivity
-import androidx.fragment.app.FragmentActivity
 import com.google.android.material.bottomnavigation.BottomNavigationView
-import com.saleef.temperedvolition.views.streakscreen.StreakFragment
-import com.saleef.temperedvolition.views.streakscreen.StreakViewImpl
+import com.saleef.temperedvolition.views.common.base.BaseActivity
 
 // Controller that handles navigation
 class MainActivity : BaseActivity() {
@@ -39,6 +36,7 @@ class MainActivity : BaseActivity() {
                 }
                R.id.relapses->{
                    //Navigate to relapse Screen
+                   screenNavigator.toHistoryScreen()
                    return@setOnItemSelectedListener true
                }
                R.id.motivation->{

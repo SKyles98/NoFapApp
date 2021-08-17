@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+    <TextView
+        android:id="@+id/titleTxt"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/relapsed"
+        android:textColor="@color/black"
+        android:textSize="25sp"
+        android:background="@color/error_red"
+        android:gravity="center"/>
+
+    <EditText
+        android:id="@+id/reasonEdt"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/titleTxt"
+        android:textColor="@color/black"
+        android:hint="@string/leave_a_reason_short_note"/>
+
+    <RelativeLayout
+        android:id="@+id/btnLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/reasonEdt">
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/noBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_marginStart="54dp"
+            android:background="?android:attr/selectableItemBackground"
+            android:text="@string/no"
+            android:textColor="@color/black" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/yesBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="35dp"
+            android:background="?android:attr/selectableItemBackground"
+            android:text="@string/yes"
+            android:textColor="@color/blue" />
+    </RelativeLayout>
+
+
+</RelativeLayout>
