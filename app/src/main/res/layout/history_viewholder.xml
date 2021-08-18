@@ -3,11 +3,14 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/cardBackGround"
+    android:background="@color/white"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginTop="30dp">
 
     <com.google.android.material.card.MaterialCardView
+        android:id="@+id/cardViewBackGround"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
@@ -16,45 +19,50 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:backgroundTint="@color/error_red"
+        android:background="@color/black"
         app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.MyApp.MaterialCardView">
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
+            <TextView
+                android:id="@+id/streakTxt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="15 days"
+                android:layout_centerHorizontal="true"
+                android:textColor="?attr/color"
+                android:textSize="17sp" />
             <RelativeLayout
                 android:id="@+id/dateLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:layout_below="@id/streakTxt">
 
                 <TextView
                     android:id="@+id/startDateTxt"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_marginStart="15dp"
                     android:text="2021:8:1 ->"
-                    android:textColor="@color/black"
-                    android:textSize="17sp" />
+                    android:textColor="?attr/color"
+                    android:textSize="15sp" />
 
                 <TextView
                     android:id="@+id/endDateTxt"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-
-                    android:layout_centerInParent="true"
-                    android:text="2021:8:15"
-                    android:textColor="@color/black"
-                    android:textSize="17sp" />
-
-                <TextView
-                    android:id="@+id/streakTxt"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
                     android:layout_alignParentEnd="true"
-                    android:text="15 days"
-                    android:textColor="@color/black"
-                    android:textSize="17sp" />
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginEnd="43dp"
+                    android:text="2021:8:15"
+                    android:textColor="?attr/color"
+                    android:textSize="15sp" />
+
+
             </RelativeLayout>
 
             <TextView
@@ -63,7 +71,7 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/dateLayout"
                 android:text="On March 2nd 2023 I will become a senior software ingineer at one of the fang companies working on the android dev tools team. Upon writing this Message I am manifesting this into my reality"
-                android:textColor="@color/black"
+                android:textColor="?attr/color"
                 android:textSize="17sp"/>
         </RelativeLayout>
     </com.google.android.material.card.MaterialCardView>

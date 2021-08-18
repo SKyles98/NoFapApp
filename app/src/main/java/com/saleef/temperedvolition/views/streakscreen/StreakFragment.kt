@@ -17,6 +17,8 @@ import android.widget.Toast
 import com.saleef.temperedvolition.*
 import com.saleef.temperedvolition.common.constants.Constants
 import com.saleef.temperedvolition.views.common.base.BaseFragment
+import com.saleef.temperedvolition.views.common.dialogs.DialogHelper
+import com.saleef.temperedvolition.views.common.screennavigators.ScreenNavigator
 import kotlinx.coroutines.*
 
 
@@ -29,6 +31,7 @@ class StreakFragment: BaseFragment(),StreakViewImpl.Listener {
     private lateinit var  alarmHelper:AlarmHelper
     private lateinit var  historyNoteDao: HistoryNoteDao
     private lateinit var  dialogHelper: DialogHelper
+    private lateinit var  screenNavigator: ScreenNavigator
     companion object{
         const val SECONDSKEY = "SECONDSKEY"
     }
@@ -40,6 +43,7 @@ class StreakFragment: BaseFragment(),StreakViewImpl.Listener {
         alarmHelper = compositionRoot.alarmHelper
         historyNoteDao = compositionRoot.historyNoteDao
         dialogHelper = compositionRoot.dialogHelper
+        screenNavigator = compositionRoot.screenNavigator
         val serviceIntent = Intent(context, TimerService::class.java)
 
             // If service is not started then we save current date
@@ -77,6 +81,7 @@ class StreakFragment: BaseFragment(),StreakViewImpl.Listener {
 
    private fun bindView(){
        Log.i("t",(alarmHelper.getStartingTimeOffset().toString()))
+       streakView.bindNightMode(sharedPrefs.getVisualPref())
       streakView.bindTimer(alarmHelper.getStartingTimeOffset())
        streakView.bindDaysPassed(sharedPrefs.getDays())
    }
@@ -103,16 +108,15 @@ class StreakFragment: BaseFragment(),StreakViewImpl.Listener {
     }
 
 
-    override fun onVisualModeClicked() {
-        TODO("Implement night mode and day mode functionality")
+    override fun onSettingsClicked() {
+        screenNavigator.toSettingsScreen()
     }
 
 
 
 
-
-    fun catchdialogResult(){
-        parentFragmentManager.setFragmentResultListener(Constants.REQUESTKEY,this,{ requestKey:String,bundle:Bundle ->
+    private fun catchdialogResult(){
+        parentFragmentManager.setFragmentResultListener(Constants.REQUESTKEY,this,{ _:String, bundle:Bundle ->
             bundle.getString(Constants.NOTEKEY)?.let { addNote(it) }
         })
     }

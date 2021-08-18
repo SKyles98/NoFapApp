@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:tools="http://schemas.android.com/tools"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/streakBackGround"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="?attr/backgroundColor"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:android="http://schemas.android.com/apk/res/android">
 
@@ -18,17 +21,19 @@
         android:layout_marginTop="16dp"
         android:indeterminateOnly="false"
         android:progressDrawable="@drawable/custom_progressbar"
+        android:background="?attr/backgroundColor"
+        android:max="1400"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/include"
-        tools:progress="50" />
+        tools:progress="700" />
 
     <TextView
         android:id="@+id/currentDaysTxt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="0 days"
-        android:textColor="@color/black"
+        android:text="@string/_0_days"
+        android:textColor="?attr/color"
         android:textSize="25sp"
         app:layout_constraintBottom_toBottomOf="@+id/streakProgress"
         app:layout_constraintEnd_toEndOf="@+id/streakProgress"
@@ -41,8 +46,8 @@
         android:id="@+id/currentTimeTxt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="00:00:00"
-        android:textColor="@color/black"
+        android:text="@string/_00_00_00"
+        android:textColor="?attr/color"
         android:textSize="25sp"
         app:layout_constraintBottom_toBottomOf="@+id/streakProgress"
         app:layout_constraintEnd_toEndOf="@+id/streakProgress"
@@ -57,8 +62,8 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
         android:background="@drawable/textview_shape"
-        android:text="Best Streak: 0 Days"
-        android:textColor="@color/white"
+        android:text="@string/best_streak_0_days"
+        android:textColor="?attr/color"
         android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
@@ -75,6 +80,7 @@
         android:layout_marginTop="76dp"
         android:backgroundTint="@color/error_red"
         android:text="@string/log_urge_relapse"
+        android:textColor="?attr/color"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/streakProgress" />

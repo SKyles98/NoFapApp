@@ -1,4 +1,4 @@
-package com.saleef.temperedvolition
+package com.saleef.temperedvolition.views.common.dialogs
 
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.FragmentManager

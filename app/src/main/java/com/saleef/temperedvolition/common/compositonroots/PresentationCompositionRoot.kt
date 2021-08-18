@@ -2,6 +2,8 @@ package com.saleef.temperedvolition.common.compositonroots
 
 import android.view.LayoutInflater
 import com.saleef.temperedvolition.*
+import com.saleef.temperedvolition.views.common.dialogs.DialogHelper
+import com.saleef.temperedvolition.views.common.screennavigators.ScreenNavigator
 import com.saleef.temperedvolition.views.common.viewfactory.ViewFactory
 
 
@@ -23,5 +25,5 @@ class PresentationCompositionRoot(private val activityCompositionRoot: ActivityC
 
     val screenNavigator: ScreenNavigator get() = ScreenNavigator(activityCompositionRoot.supportFragmentManager)
 
-    val dialogHelper:DialogHelper get() = DialogHelper(activityCompositionRoot.supportFragmentManager)
+    val dialogHelper: DialogHelper get() = DialogHelper(activityCompositionRoot.supportFragmentManager)
 }

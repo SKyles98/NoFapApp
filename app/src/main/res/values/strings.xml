@@ -12,4 +12,7 @@
     <string name="leave_a_reason_short_note">Leave a reason/short note...</string>
     <string name="yes">Yes</string>
     <string name="no">No</string>
+    <string name="_0_days">0 days</string>
+    <string name="_00_00_00">00:00:00</string>
+    <string name="best_streak_0_days">Best Streak: 0 Days</string>
 </resources>

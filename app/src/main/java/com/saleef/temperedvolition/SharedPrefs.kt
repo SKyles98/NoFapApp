@@ -68,7 +68,17 @@ class SharedPrefs(private val sharedPreferences: SharedPreferences) {
         return sharedPreferences.getString(START_DATE,"NONE")
     }
 
+    fun saveVisualPref(daynightState:Int){ //If true then mode is dark else then its day
+        val editor:SharedPreferences.Editor = sharedPreferences.edit()
+        editor.putInt(VISUAL_MODE,daynightState)
+        editor.apply()
+    }
+
+    fun getVisualPref():Int{
+        return sharedPreferences.getInt(VISUAL_MODE,1)
+    }
     companion object{
+        const val VISUAL_MODE:String = "MODE_STATUS"
         const val START_STATUS:String = "START STATUS"
         const val CURRENT_DAYS:String = "CURR_DAYS"
         const val TIMER_STATE:String = "TIMER STATE"

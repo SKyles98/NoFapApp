@@ -10,11 +10,12 @@ import android.widget.Toast
 import com.saleef.temperedvolition.views.common.base.BaseFragment
 import com.saleef.temperedvolition.HistoryNote
 import com.saleef.temperedvolition.HistoryNoteDao
+import com.saleef.temperedvolition.SharedPrefs
 import kotlinx.coroutines.*
 
-/*TODO Fix appearance of viewHolder
+/*
   TODO DATE Time DIsplay is a bit jank need to adjust UI for smaller devices
-  TODO Add Night mode
+  TODO Add Night mode (Fix NightModeBug not changing color of popUp menu)
   TODO implement highest Days for the ui
   TODO Start on motivation screen (Probably will just display some motivational quotes)
 
@@ -25,10 +26,11 @@ class HistoryFragment : BaseFragment(),HistoryViewImpl.Listener {
 
     private lateinit var historyNoteDao: HistoryNoteDao
     private lateinit var historyViewImpl: HistoryViewImpl
-
+    private lateinit var sharedPrefs: SharedPrefs
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         historyNoteDao = compositionRoot.historyNoteDao
+        sharedPrefs = compositionRoot.sharedPrefs
     }
 
 
@@ -52,7 +54,8 @@ class HistoryFragment : BaseFragment(),HistoryViewImpl.Listener {
               coroutineScope.launch {
                   try{
                     val result = historyNoteDao.getAllNotes()
-                      historyViewImpl.bindNotes(result)
+                      historyViewImpl.bindDayNight(sharedPrefs.getVisualPref())
+                      historyViewImpl.bindNotes(result,sharedPrefs.getVisualPref())
               } finally {
                   Toast.makeText(requireContext(),"Hidden",Toast.LENGTH_LONG).show()
               }

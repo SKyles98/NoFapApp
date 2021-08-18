@@ -3,12 +3,13 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
-        android:icon="@drawable/ic_nightmode"
+        android:icon="@drawable/ic_settings"
         android:title="@string/settings"
-        app:showAsAction="ifRoom"
-        android:id="@+id/visualMode"/>
+        android:id="@+id/settings"
+        android:iconTint="@color/white"/>
 
     <item
         android:title="Clear History"
-        android:id="@+id/history"/>
+        android:id="@+id/history"
+        android:iconTint="@color/white"/>
 </menu>
