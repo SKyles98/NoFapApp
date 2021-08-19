@@ -7,9 +7,14 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.FragmentActivity
 import androidx.fragment.app.FragmentManager
 import com.saleef.temperedvolition.*
+import com.saleef.temperedvolition.DataBase.HistoryNoteDao
+import com.saleef.temperedvolition.DataBase.HistoryNoteDataBase
+import com.saleef.temperedvolition.networking.ZenQuotesApi
 
 // Intialization of services that need activity
-class ActivityCompositionRoot( private val appCompatActivity: AppCompatActivity, private val fragmentActivity: FragmentActivity) {
+class ActivityCompositionRoot( private val appCompatActivity: AppCompatActivity,
+                               private val fragmentActivity: FragmentActivity,
+                               private val appCompositionRoot: AppCompositionRoot) {
 
 
 
@@ -19,6 +24,8 @@ class ActivityCompositionRoot( private val appCompatActivity: AppCompatActivity,
             Context.MODE_PRIVATE
         )
     }
+
+     val zenQuotesApi:ZenQuotesApi = appCompositionRoot.zenQuotesApi
 
     val layoutInflater:LayoutInflater get() = LayoutInflater.from(fragmentActivity)
 

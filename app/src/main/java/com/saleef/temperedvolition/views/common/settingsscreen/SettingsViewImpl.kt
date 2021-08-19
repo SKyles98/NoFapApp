@@ -7,10 +7,11 @@ import android.widget.TextView
 import androidx.appcompat.widget.Toolbar
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
-
 import com.google.android.material.switchmaterial.SwitchMaterial
-import com.saleef.temperedvolition.MainActivity
+
+
 import com.saleef.temperedvolition.R
+import com.saleef.temperedvolition.common.constants.Constants
 import com.saleef.temperedvolition.views.common.viewmvc.BaseViewMvc
 
 class SettingsViewImpl(private val layoutInflater: LayoutInflater,private val viewGroup: ViewGroup?) :
@@ -22,7 +23,7 @@ BaseViewMvc<SettingsViewImpl.Listener>(layoutInflater,viewGroup, R.layout.settin
       fun onNavigationClicked()
     }
 
-    private val switch:SwitchMaterial
+    private val switch: SwitchMaterial
     private val toolbar:Toolbar
     private val textView:TextView
     private val constraintLayout:ConstraintLayout
@@ -45,15 +46,17 @@ BaseViewMvc<SettingsViewImpl.Listener>(layoutInflater,viewGroup, R.layout.settin
 
 
     fun bindDayNightMode(state:Int){
-        if (state == MainActivity.OnDayNightStateChanged.NIGHT){ // NightModeConfig
-            toolbar.setBackgroundColor(ContextCompat.getColor(context,R.color.colorPrimaryDarkNight))
-            textView.setTextColor(ContextCompat.getColor(context,R.color.colorTextNight))
-            constraintLayout.setBackgroundColor(ContextCompat.getColor(context,R.color.colorPrimaryDarkNight))
+        val white: Int = ContextCompat.getColor(context,R.color.white)
+        val black: Int = ContextCompat.getColor(context,R.color.colorPrimaryDarkNight)
+        if (state == Constants.NIGHTMODE){ // NightModeConfig
+            toolbar.setBackgroundColor(black)
+            textView.setTextColor(white)
+            constraintLayout.setBackgroundColor(black)
             switch.isChecked = true
-        } else{ // NightModeConfig
+        } else{ // DayModeConfig
             toolbar.setBackgroundColor(ContextCompat.getColor(context,R.color.blue))
-            textView.setTextColor(ContextCompat.getColor(context,R.color.black))
-            constraintLayout.setBackgroundColor(ContextCompat.getColor(context,R.color.white))
+            textView.setTextColor(black)
+            constraintLayout.setBackgroundColor(white)
             switch.isChecked = false
         }
     }

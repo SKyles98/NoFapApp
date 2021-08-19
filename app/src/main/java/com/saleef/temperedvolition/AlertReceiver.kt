@@ -22,7 +22,9 @@ class AlertReceiver : BroadcastReceiver() {
         // Each day passed we increment the start by 24 hours in milliseconds
 
         sharedPrefs?.saveStartTime(sharedPrefs.getStartTime() + 86400000)
-        sendNotification(context)
+        if (sharedPrefs != null) {
+            sendNotification(context,sharedPrefs.getDays())
+        }
 
     }
 
@@ -38,13 +40,13 @@ class AlertReceiver : BroadcastReceiver() {
 
     }
 
-    fun sendNotification(context: Context?){
+    fun sendNotification(context: Context?,day:Int){
         // Let function essentially says if the variale is not null then perform functionality
         val builder = context?.let {
             NotificationCompat.Builder(it, AlarmHelper.CHANNEL_ID)
                 .setSmallIcon(R.mipmap.ic_launcher)
-                .setContentTitle("Hello")
-                .setContentText("Congrats")
+                .setContentTitle("Day$day")
+                .setContentText("Keep Striving")
                 .setPriority(NotificationCompat.PRIORITY_DEFAULT)
         }
 

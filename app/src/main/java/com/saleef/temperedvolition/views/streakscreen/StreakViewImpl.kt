@@ -2,6 +2,7 @@ package com.saleef.temperedvolition.views.streakscreen
 
 
 
+import android.graphics.Color
 import android.os.Build
 import android.util.Log
 import android.view.LayoutInflater
@@ -17,6 +18,7 @@ import com.google.android.material.button.MaterialButton
 import com.saleef.temperedvolition.MainActivity
 
 import com.saleef.temperedvolition.R
+import com.saleef.temperedvolition.common.constants.Constants
 import com.saleef.temperedvolition.views.common.viewmvc.BaseViewMvc
 
 
@@ -104,24 +106,28 @@ class StreakViewImpl(private val layoutinflater: LayoutInflater, private val par
 
 
     fun bindNightMode(status:Int){
-        if (status == MainActivity.OnDayNightStateChanged.NIGHT){
-            daysTxt.setTextColor(ContextCompat.getColor(context,R.color.white))
-            timerTxt.setTextColor(ContextCompat.getColor(context,R.color.white))
-            highestTxt.setTextColor(ContextCompat.getColor(context,R.color.white))
-            highestTxt.setBackgroundColor(ContextCompat.getColor(context,R.color.black))
-            background.setBackgroundColor(ContextCompat.getColor(context,R.color.colorPrimaryDarkNight))
-            toolbar.setBackgroundColor(ContextCompat.getColor(context,R.color.colorPrimaryNight))
-            relapseButton.setTextColor(ContextCompat.getColor(context,R.color.white))
-            progressBar.setBackgroundColor(ContextCompat.getColor(context,R.color.black))
+        val white: Int = ContextCompat.getColor(context,R.color.white)
+        val black: Int = ContextCompat.getColor(context,R.color.black)
+        if (status == Constants.NIGHTMODE){
+            daysTxt.setTextColor(white)
+            timerTxt.setTextColor(white)
+            highestTxt.setTextColor(white)
+            highestTxt.setBackgroundColor(black)
+            background.setBackgroundColor(black)
+            toolbar.setBackgroundColor(black)
+            relapseButton.setTextColor(white)
+            progressBar.setBackgroundColor(black)
         } else{
-            daysTxt.setTextColor(ContextCompat.getColor(context,R.color.black))
-            timerTxt.setTextColor(ContextCompat.getColor(context,R.color.black))
-            highestTxt.setTextColor(ContextCompat.getColor(context,R.color.black))
-            highestTxt.setBackgroundColor(ContextCompat.getColor(context,R.color.light_blue))
-            background.setBackgroundColor(ContextCompat.getColor(context,R.color.white))
+            daysTxt.setTextColor(black)
+            timerTxt.setTextColor(black)
+            highestTxt.setTextColor(black)
+            relapseButton.setTextColor(black)
+            progressBar.setBackgroundColor(white)
+            background.setBackgroundColor(white)
             toolbar.setBackgroundColor(ContextCompat.getColor(context,R.color.blue))
-            relapseButton.setTextColor(ContextCompat.getColor(context,R.color.black))
-            progressBar.setBackgroundColor(ContextCompat.getColor(context,R.color.white))
+            highestTxt.setBackgroundColor(ContextCompat.getColor(context,R.color.light_blue))
+
+
         }
     }
 }

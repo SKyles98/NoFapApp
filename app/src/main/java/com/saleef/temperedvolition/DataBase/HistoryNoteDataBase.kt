@@ -1,4 +1,4 @@
-package com.saleef.temperedvolition
+package com.saleef.temperedvolition.DataBase
 
 import android.content.Context
 import androidx.room.Database
@@ -9,21 +9,21 @@ import androidx.room.RoomDatabase
 abstract class HistoryNoteDataBase: RoomDatabase() {
 
 
-  abstract fun getHistoryNoteDao():HistoryNoteDao
+  abstract fun getHistoryNoteDao(): HistoryNoteDao
 
 
       companion object{ // Singleton initialization of database
           @Volatile
-          private var INSTANCE:HistoryNoteDataBase? = null
+          private var INSTANCE: HistoryNoteDataBase? = null
 
-          fun getDataBase(context: Context):HistoryNoteDataBase{
+          fun getDataBase(context: Context): HistoryNoteDataBase {
               val tempInstance = INSTANCE
               if (tempInstance!=null){
                   return tempInstance
               }
               synchronized(this){
                   val instance = Room.databaseBuilder(context.applicationContext
-                      ,HistoryNoteDataBase::class.java,
+                      , HistoryNoteDataBase::class.java,
                       "relapse_notes").build()
                   INSTANCE = instance
                   return instance

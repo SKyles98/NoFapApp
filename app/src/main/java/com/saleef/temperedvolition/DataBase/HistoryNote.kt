@@ -1,4 +1,4 @@
-package com.saleef.temperedvolition
+package com.saleef.temperedvolition.DataBase
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey

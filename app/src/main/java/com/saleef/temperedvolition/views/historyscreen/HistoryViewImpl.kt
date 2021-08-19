@@ -17,9 +17,9 @@ import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.card.MaterialCardView
-import com.saleef.temperedvolition.HistoryNote
-import com.saleef.temperedvolition.MainActivity
+import com.saleef.temperedvolition.DataBase.HistoryNote
 import com.saleef.temperedvolition.R
+import com.saleef.temperedvolition.common.constants.Constants
 import com.saleef.temperedvolition.views.common.viewmvc.BaseViewMvc
 //2:01
 class HistoryViewImpl(private val layoutInflater: LayoutInflater,private val viewGroup: ViewGroup?)
@@ -59,8 +59,8 @@ class HistoryViewImpl(private val layoutInflater: LayoutInflater,private val vie
 
         // Init RecyclerView
         recyclerView = findViewById(R.id.historyRecycler)
-         adapter = HistoryRecyclerAdapter{ // It just works :}
-            historyNote -> // passes a history note with a method????
+         adapter = HistoryRecyclerAdapter{ // Pass a lambda function that notifies observers on click
+            historyNote ->
             for (listener in listeners) listener.onNoteClicked(historyNote)
 
         }
@@ -69,16 +69,18 @@ class HistoryViewImpl(private val layoutInflater: LayoutInflater,private val vie
     }
 
       fun bindDayNight(status:Int){
-          if (status==MainActivity.OnDayNightStateChanged.NIGHT){
-              toolbar.setBackgroundColor(ContextCompat.getColor(context,R.color.colorPrimaryDarkNight))
-              backGround.setBackgroundColor(ContextCompat.getColor(context,R.color.colorPrimaryDarkNight))
+          val white: Int = ContextCompat.getColor(context,R.color.white)
+          val black: Int = ContextCompat.getColor(context,R.color.colorPrimaryDarkNight)
+          if (status==Constants.NIGHTMODE){
+              toolbar.setBackgroundColor(black)
+              backGround.setBackgroundColor(black)
           } else{
               toolbar.setBackgroundColor(ContextCompat.getColor(context,R.color.blue))
-              backGround.setBackgroundColor(ContextCompat.getColor(context,R.color.white))
+              backGround.setBackgroundColor(white)
           }
       }
 
-       fun bindNotes(historyNotes: List<HistoryNote>,status: Int){
+       fun bindNotes(historyNotes: List<HistoryNote>, status: Int){
            adapter.bindData(historyNotes,status)
        }
 
@@ -90,6 +92,7 @@ class HistoryViewImpl(private val layoutInflater: LayoutInflater,private val vie
 
          private var notes:List<HistoryNote> = ArrayList(0)
          private var dayNight:Int = 1
+
        inner class HistoryViewHolder(view: View): RecyclerView.ViewHolder(view){
              val startDate: TextView = view.findViewById(R.id.startDateTxt)
            val endDate: TextView = view.findViewById(R.id.endDateTxt)
@@ -109,7 +112,7 @@ class HistoryViewImpl(private val layoutInflater: LayoutInflater,private val vie
           holder.endDate.text = notes[position].streakEnded
           holder.streak.text = notes[position].streakDuration.toString()
           holder.note.text = notes[position].failureNote
-          if (dayNight == MainActivity.OnDayNightStateChanged.NIGHT){
+          if (dayNight == Constants.NIGHTMODE){
               holder.startDate.setTextColor(ContextCompat.getColor(holder.startDate.context,R.color.white))
               holder.endDate.setTextColor(ContextCompat.getColor(holder.endDate.context,R.color.white))
               holder.streak.setTextColor(ContextCompat.getColor(holder.streak.context,R.color.white))
@@ -135,7 +138,7 @@ class HistoryViewImpl(private val layoutInflater: LayoutInflater,private val vie
       }
 
 
-      fun bindData(historyNotes:List<HistoryNote>,visualStatus:Int){
+      fun bindData(historyNotes:List<HistoryNote>, visualStatus:Int){
           notes = historyNotes
           dayNight = visualStatus
           notifyDataSetChanged()

@@ -3,13 +3,15 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
-        android:icon="@drawable/ic_settings"
+        android:icon="@drawable/ic_baseline_settings_24"
         android:title="@string/settings"
         android:id="@+id/settings"
-        android:iconTint="@color/white"/>
+        app:showAsAction="ifRoom"
+        />
 
     <item
         android:title="Clear History"
         android:id="@+id/history"
-        android:iconTint="@color/white"/>
+        android:icon="@drawable/ic_baseline_delete_24"
+        app:showAsAction="ifRoom"/>
 </menu>

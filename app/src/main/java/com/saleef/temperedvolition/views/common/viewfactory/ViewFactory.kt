@@ -4,6 +4,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import com.saleef.temperedvolition.views.common.settingsscreen.SettingsViewImpl
 import com.saleef.temperedvolition.views.historyscreen.HistoryViewImpl
+import com.saleef.temperedvolition.views.motivationscreen.MotivationViewImpl
 import com.saleef.temperedvolition.views.streakscreen.StreakViewImpl
 
 // Generates our view classes
@@ -20,5 +21,9 @@ class ViewFactory(private val layoutInflater: LayoutInflater) {
 
     fun newSettingsViewImpl(viewGroup: ViewGroup?):SettingsViewImpl{
         return SettingsViewImpl(layoutInflater,viewGroup)
+    }
+
+    fun newMotivationViewImpl(viewGroup:ViewGroup?):MotivationViewImpl{
+        return MotivationViewImpl(layoutInflater,viewGroup)
     }
 }

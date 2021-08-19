@@ -15,6 +15,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import com.saleef.temperedvolition.*
+import com.saleef.temperedvolition.DataBase.HistoryNoteDao
 import com.saleef.temperedvolition.common.constants.Constants
 import com.saleef.temperedvolition.views.common.base.BaseFragment
 import com.saleef.temperedvolition.views.common.dialogs.DialogHelper
